@@ -1,0 +1,29 @@
+# Compose GenUI - AI Context
+
+## Project Overview
+Compose GenUI is an Android/Kotlin Multiplatform library that allows streaming Server-Driven UI directly from Large Language Models (LLMs) and rendering them as native Jetpack Compose components. 
+It does not use WebViews. It parses JSON into native Compose nodes.
+
+## Core Schema (UiNode)
+The UI is built using a recursive JSON structure represented by `UiNode`.
+Valid types include: "Column", "Row", "Card", "Text", "Button".
+
+Example JSON payload expected from LLMs:
+{
+  "type": "Column",
+  "children": [
+    {
+      "type": "Text",
+      "props": { "text": "Hello World", "color": "#000000" }
+    }
+  ],
+  "props": {}
+}
+
+## How to Contribute
+When contributing code, ensure you are interacting with:
+1. `UiNode.kt` (for schema changes)
+2. `GenUIParser.kt` (for parsing JSON streams)
+3. `GenerativeRenderer.kt` (for Jetpack Compose rendering logic)
+
+Do not hallucinate Android Views; stick strictly to Jetpack Compose.

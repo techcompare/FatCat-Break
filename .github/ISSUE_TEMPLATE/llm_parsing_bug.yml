@@ -1,0 +1,33 @@
+name: "🤖 LLM Parsing / JSON Bug"
+description: "The LLM (Claude/OpenAI) returned valid/invalid JSON, but GenUIParser failed to handle it properly."
+title: "[Parsing Bug]: "
+labels: ["bug", "parser", "llm-hallucination"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a parsing bug! To help us fix `GenUIParser`, please provide the exact JSON the LLM generated so we can reproduce the failure.
+  - type: textarea
+    id: llm-prompt
+    attributes:
+      label: "What was the prompt?"
+      description: "What did you ask the LLM to generate?"
+      placeholder: "e.g., 'Create a modern dashboard for a fitness app showing 3 daily stats.'"
+    validations:
+      required: false
+  - type: textarea
+    id: llm-json-output
+    attributes:
+      label: "Raw LLM JSON Output"
+      description: "Paste the exact JSON payload the LLM returned before the crash."
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: error-logs
+    attributes:
+      label: "Crash Log / Stack Trace"
+      description: "What was the error thrown by `GenUIParser`?"
+      render: shell
+    validations:
+      required: true
