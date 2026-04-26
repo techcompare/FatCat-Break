@@ -6,6 +6,27 @@
 
 No webviews. No sluggish HTML. Just clean, native Android UI built by AI in real-time.
 
+## 📦 Installation
+
+To use `Compose GenUI` in your Android project, add JitPack to your root `settings.gradle.kts` or `build.gradle`:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+```
+
+Then, add the dependency to your app-level `build.gradle.kts`:
+
+```kotlin
+dependencies {
+    implementation("com.github.techcompare:Issue_Template:main-SNAPSHOT")
+}
+```
+
 ## The Architecture
 
 The library is broken down into three main pillars:
