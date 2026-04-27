@@ -10,6 +10,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 function showOverlay() {
   if (document.getElementById('fat-cat-overlay-root')) return;
+  if (!document.body) {
+    console.warn("[FatCat] Body not found, waiting...");
+    setTimeout(showOverlay, 500);
+    return;
+  }
 
   const host = document.createElement('div');
   host.id = 'fat-cat-overlay-root';
