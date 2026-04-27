@@ -12,8 +12,17 @@ chrome.runtime.onInstalled.addListener(() => {
   setupAlarm(DEFAULT_BREAK_INTERVAL);
 });
 
+chrome.runtime.onStartup.addListener(() => {
+  chrome.storage.local.get(['breakInterval', 'isBreakActive'], (res) => {
+    if (!res.isBreakActive) {
+      setupAlarm(res.breakInterval || DEFAULT_BREAK_INTERVAL);
+    }
+  });
+});
+
 function setupAlarm(minutes) {
-  chrome.alarms.create('fatCatBreak', { delayInMinutes: minutes });
+  chrome.alarms.clear('fatCatBreak');
+  chrome.alarms.create('fatCatBreak', { delayInMinutes: parseFloat(minutes) });
 }
 
 chrome.alarms.onAlarm.addListener((alarm) => {

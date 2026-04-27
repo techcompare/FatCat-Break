@@ -21,5 +21,11 @@
       "js": ["content.js"],
       "css": ["overlay.css"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["overlay.css"],
+      "matches": ["<all_urls>"]
+    }
   ]
 }
