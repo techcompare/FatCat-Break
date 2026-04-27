@@ -2,8 +2,13 @@ const DISTRACTION_SITES = ['reddit.com', 'youtube.com', 'twitter.com', 'x.com', 
 let activeTabId = null;
 let startTime = null;
 
-// Default limits
-const LIMIT_MINUTES = 1; // 1 minute for testing
+// Initialize active tab on load
+chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  if (tabs[0]) {
+    activeTabId = tabs[0].id;
+    checkTab();
+  }
+});
 
 chrome.tabs.onActivated.addListener(activeInfo => {
   activeTabId = activeInfo.tabId;
@@ -17,21 +22,28 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 async function checkTab() {
-  const tab = await chrome.tabs.get(activeTabId);
-  const url = tab.url;
-  
-  const isDistraction = DISTRACTION_SITES.some(site => url.includes(site));
-  
-  if (isDistraction) {
-    if (!startTime) {
-      startTime = Date.now();
-      console.log("[FatCat] Started tracking distraction site:", url);
-      setupAlarm(LIMIT_MINUTES);
+  try {
+    const tab = await chrome.tabs.get(activeTabId);
+    if (!tab || !tab.url) return;
+
+    const url = tab.url.toLowerCase();
+    const isDistraction = DISTRACTION_SITES.some(site => url.includes(site));
+    
+    if (isDistraction) {
+      chrome.storage.local.get(['isBreakActive'], (res) => {
+        if (!res.isBreakActive && !startTime) {
+          startTime = Date.now();
+          console.log("[FatCat] Distraction detected! Judgment starts in 1 minute.");
+          setupAlarm(1); // Force 1 minute for your test
+        }
+      });
+    } else {
+      console.log("[FatCat] Safe site. Pausing judgment.");
+      startTime = null;
+      chrome.alarms.clear('fatCatBreak');
     }
-  } else {
-    console.log("[FatCat] Work tab detected. Pausing judgment.");
-    startTime = null;
-    chrome.alarms.clear('fatCatBreak');
+  } catch (e) {
+    console.error("[FatCat] Error checking tab:", e);
   }
 }
 
