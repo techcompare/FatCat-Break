@@ -41,6 +41,12 @@ Because we're all addicted to our screens and sometimes a simple notification is
 
 This is an open-source project. Feel free to contribute more judgmental animals, better animations, or more aggressive break-forcing features!
 
+## 🤝 Support & Contact
+
+If you have questions, feedback, or want to collaborate on making the cat even more judgmental, reach out at:
+
+📧 **[workwithme785@gmail.com](mailto:workwithme785@gmail.com)**
+
 ---
 
 *Built with ❤️ and a lot of judgmental stares.*
