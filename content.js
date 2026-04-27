@@ -1,5 +1,6 @@
+console.log("%c[FatCat] 🐱 System Active & Watching...", "color: #ff4757; font-size: 16px; font-weight: bold;");
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log("FatCat received action:", request.action);
   if (request.action === "SHOW_CAT") {
     showOverlay();
   } else if (request.action === "HIDE_CAT") {
@@ -20,11 +21,33 @@ function showOverlay() {
 
   const shadow = host.attachShadow({ mode: 'closed' });
   
-  // Inject CSS into Shadow DOM
-  const styleLink = document.createElement('link');
-  styleLink.rel = 'stylesheet';
-  styleLink.href = chrome.runtime.getURL('overlay.css');
-  shadow.appendChild(styleLink);
+  // Inject CSS directly for maximum reliability
+  const style = document.createElement('style');
+  style.textContent = `
+    #fat-cat-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: rgba(3, 7, 18, 0.98) !important;
+      backdrop-filter: blur(15px) !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      color: white !important;
+      font-family: sans-serif !important;
+      z-index: 2147483647 !important;
+    }
+    .cat-container { text-align: center !important; }
+    .cat-message { font-size: 3rem !important; font-weight: 900 !important; color: #ff4757 !important; margin-bottom: 2rem !important; }
+    .fat-cat { position: relative !important; width: 300px !important; height: 200px !important; margin: 0 auto !important; }
+    .cat-body { width: 250px !important; height: 180px !important; background: #f1f2f6 !important; border-radius: 100px 100px 80px 80px !important; animation: breathe 2s infinite !important; }
+    .cat-eyes { display: flex !important; justify-content: space-around !important; padding-top: 50px !important; }
+    .cat-eye { width: 15px !important; height: 15px !important; background: #2f3542 !important; border-radius: 50% !important; }
+    @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  `;
+  shadow.appendChild(style);
 
   const container = document.createElement('div');
   container.id = 'fat-cat-overlay';
