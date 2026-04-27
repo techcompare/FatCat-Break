@@ -72,3 +72,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     startBreak();
   }
 });
+
+// Reinject if user navigates during break
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete') {
+    chrome.storage.local.get(['isBreakActive'], (res) => {
+      if (res.isBreakActive) {
+        chrome.tabs.sendMessage(tabId, { action: "SHOW_CAT" }).catch(() => {});
+      }
+    });
+  }
+});
