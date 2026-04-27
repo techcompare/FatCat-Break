@@ -1,5 +1,5 @@
-const WORK_MINUTES = 1; 
-const BREAK_MINUTES = 1;
+const WORK_MINUTES = 25; 
+const BREAK_MINUTES = 5;
 
 chrome.runtime.onInstalled.addListener(() => {
   resetSession();
