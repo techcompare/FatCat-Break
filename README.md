@@ -1,5 +1,7 @@
 # 🐱 FatCat Break
 
+![FatCat Break Demo](demo.png)
+
 > The most judgmental productivity tool ever built.
 
 FatCat Break is an open-source Chrome extension that uses the power of "Chonky Judgment" to force you to take breaks. Every 25 minutes (or your custom interval), a giant, breathing, judgmental CSS cat will take over your entire screen. You can't scroll. You can't click. You can only contemplate your life choices for 5 minutes.
