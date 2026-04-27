@@ -1,6 +1,6 @@
-// Default settings
-const DEFAULT_BREAK_INTERVAL = 25; // minutes
-const BREAK_DURATION = 5; // minutes
+// Default settings for testing
+const DEFAULT_BREAK_INTERVAL = 1; // minutes
+const BREAK_DURATION = 1; // minutes
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({ 
