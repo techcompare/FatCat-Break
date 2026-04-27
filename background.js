@@ -1,69 +1,70 @@
-const DISTRACTION_SITES = ['reddit.com', 'youtube.com', 'twitter.com', 'x.com', 'instagram.com', 'facebook.com', 'tiktok.com'];
-let activeTabId = null;
-let startTime = null;
+const WORK_MINUTES = 1; 
+const BREAK_MINUTES = 1;
 
-// Initialize active tab on load
-chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  if (tabs[0]) {
-    activeTabId = tabs[0].id;
-    checkTab();
-  }
+chrome.runtime.onInstalled.addListener(() => {
+  resetSession();
 });
 
-chrome.tabs.onActivated.addListener(activeInfo => {
-  activeTabId = activeInfo.tabId;
-  checkTab();
-});
-
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (tabId === activeTabId && changeInfo.status === 'complete') {
-    checkTab();
-  }
-});
-
-async function checkTab() {
-  try {
-    const tab = await chrome.tabs.get(activeTabId);
-    if (!tab || !tab.url) return;
-
-    const url = tab.url.toLowerCase();
-    const isDistraction = DISTRACTION_SITES.some(site => url.includes(site));
-    
-    if (isDistraction) {
-      chrome.storage.local.get(['isBreakActive'], (res) => {
-        if (!res.isBreakActive && !startTime) {
-          startTime = Date.now();
-          console.log("[FatCat] Distraction detected! Judgment starts in 1 minute.");
-          setupAlarm(1); // Force 1 minute for your test
-        }
-      });
-    } else {
-      console.log("[FatCat] Safe site. Pausing judgment.");
-      startTime = null;
-      chrome.alarms.clear('fatCatBreak');
+chrome.runtime.onStartup.addListener(() => {
+  chrome.storage.local.get(['isBreakActive'], (res) => {
+    if (!res.isBreakActive) {
+      setupWorkAlarm(WORK_MINUTES);
     }
-  } catch (e) {
-    console.error("[FatCat] Error checking tab:", e);
-  }
-}
+  });
+});
 
-function setupAlarm(minutes) {
-  chrome.alarms.clear('fatCatBreak');
-  chrome.alarms.create('fatCatBreak', { delayInMinutes: parseFloat(minutes) });
+function setupWorkAlarm(mins) {
+  chrome.alarms.clearAll();
+  chrome.alarms.create('workTime', { delayInMinutes: parseFloat(mins) });
+  console.log(`[FatCat] Work timer set for ${mins} minutes.`);
 }
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name === 'fatCatBreak') {
-    triggerHijack();
+  if (alarm.name === 'workTime') {
+    startBreak();
+  } else if (alarm.name === 'breakTime') {
+    endBreak();
   }
 });
 
-async function triggerHijack() {
+function startBreak() {
   chrome.storage.local.set({ isBreakActive: true });
+  notifyAllTabs("SHOW_CAT");
+  chrome.alarms.create('breakTime', { delayInMinutes: BREAK_MINUTES });
+  console.log("[FatCat] BREAK STARTED. Judgment in progress.");
+}
+
+function endBreak() {
+  chrome.storage.local.set({ isBreakActive: false });
+  notifyAllTabs("HIDE_CAT");
+  setupWorkAlarm(WORK_MINUTES);
+  console.log("[FatCat] Break over. Get back to work.");
+}
+
+async function notifyAllTabs(action) {
   const tabs = await chrome.tabs.query({});
   tabs.forEach(tab => {
-    if (DISTRACTION_SITES.some(site => tab.url.includes(site))) {
-      chrome.tabs.sendMessage(tab.id, { action: "SHOW_CAT" }).catch(() => {});
-    }
+    chrome.tabs.sendMessage(tab.id, { action }).catch(() => {});
   });
 }
+
+function resetSession() {
+  chrome.storage.local.set({ isBreakActive: false });
+  setupWorkAlarm(WORK_MINUTES);
+}
+
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.action === "START_BREAK_NOW") startBreak();
+  if (request.action === "RESET_TIMER") setupWorkAlarm(request.minutes);
+});
+
+// Reinject if user navigates during break
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (changeInfo.status === 'complete') {
+    chrome.storage.local.get(['isBreakActive'], (res) => {
+      if (res.isBreakActive) {
+        chrome.tabs.sendMessage(tabId, { action: "SHOW_CAT" }).catch(() => {});
+      }
+    });
+  }
+});
