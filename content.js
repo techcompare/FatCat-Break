@@ -49,6 +49,8 @@ function showOverlay() {
   `;
   shadow.appendChild(style);
 
+  const container = document.createElement('div');
+  container.id = 'fat-cat-overlay';
   container.innerHTML = `
     <div class="cat-container">
       <div class="cat-message">JUDGING YOUR PRODUCTIVITY...</div>
