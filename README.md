@@ -4,7 +4,7 @@
 
 FatCat Break is an open-source Chrome extension that uses the power of "Chonky Judgment" to force you to take breaks. Every 25 minutes (or your custom interval), a giant, breathing, judgmental CSS cat will take over your entire screen. You can't scroll. You can't click. You can only contemplate your life choices for 5 minutes.
 
-![License](https://img.shields.io/github/license/techcompare/Issue_Template?style=for-the-badge&color=orange)
+![License](https://img.shields.io/github/license/techcompare/FatCat-Break?style=for-the-badge&color=orange)
 ![Manifest](https://img.shields.io/badge/Manifest-V3-blue?style=for-the-badge)
 
 ## 🚀 Features
@@ -18,11 +18,11 @@ FatCat Break is an open-source Chrome extension that uses the power of "Chonky J
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/techcompare/Issue_Template.git
+   git clone https://github.com/techcompare/FatCat-Break.git
    ```
 2. Open Chrome and navigate to `chrome://extensions/`.
 3. Enable **"Developer mode"** in the top right.
-4. Click **"Load unpacked"** and select the folder where you cloned this repo.
+4. Click **"Load unpacked"** and select the folder `FatCat-Break`.
 5. Prepare to be judged.
 
 ## 🛠️ Tech Stack
