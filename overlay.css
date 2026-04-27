@@ -1,0 +1,132 @@
+#fat-cat-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 7, 18, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 2147483647; /* Max z-index */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cat-container {
+  text-align: center;
+}
+
+.cat-message {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ff4757;
+  letter-spacing: -2px;
+  margin-bottom: 2rem;
+  animation: jitter 0.2s infinite;
+}
+
+.break-timer {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* THE CSS FAT CAT */
+.fat-cat {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.cat-body {
+  width: 250px;
+  height: 180px;
+  background: #f1f2f6;
+  border-radius: 100px 100px 80px 80px;
+  position: relative;
+  margin: 0 auto;
+  box-shadow: inset -10px -10px 0 rgba(0,0,0,0.05);
+  animation: breathe 2s ease-in-out infinite;
+}
+
+.cat-ears::before, .cat-ears::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  width: 40px;
+  height: 50px;
+  background: #f1f2f6;
+  border-radius: 50% 50% 0 0;
+}
+
+.cat-ears::before { left: 30px; transform: rotate(-20deg); }
+.cat-ears::after { right: 30px; transform: rotate(20deg); }
+
+.cat-eyes {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 50px;
+}
+
+.cat-eye {
+  width: 15px;
+  height: 15px;
+  background: #2f3542;
+  border-radius: 50%;
+  animation: squint 4s infinite;
+}
+
+.cat-nose {
+  width: 12px;
+  height: 8px;
+  background: #ff6b81;
+  border-radius: 50%;
+  margin: 10px auto;
+}
+
+.cat-mouth {
+  width: 20px;
+  height: 10px;
+  border: 2px solid #2f3542;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  margin: 0 auto;
+}
+
+.cat-tail {
+  position: absolute;
+  right: -40px;
+  bottom: 20px;
+  width: 80px;
+  height: 20px;
+  background: #f1f2f6;
+  border-radius: 20px;
+  transform-origin: left center;
+  animation: wag 3s infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes wag {
+  0%, 100% { transform: rotate(0); }
+  50% { transform: rotate(20deg); }
+}
+
+@keyframes squint {
+  0%, 90%, 100% { height: 15px; }
+  95% { height: 2px; }
+}
+
+@keyframes jitter {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(1px, -1px); }
+  50% { transform: translate(-1px, 1px); }
+  75% { transform: translate(1px, 1px); }
+}

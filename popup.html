@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --primary: #3b82f6;
+      --text: #f8fafc;
+      --card: rgba(30, 41, 59, 0.7);
+    }
+    body {
+      width: 300px;
+      padding: 1.5rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .logo { font-size: 1.5rem; }
+    h1 { font-size: 1.25rem; margin: 0; font-weight: 800; }
+    
+    .status-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .status-label { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; }
+    .status-value { font-size: 1.1rem; font-weight: 600; color: var(--primary); margin-top: 0.25rem; }
+
+    .control-group {
+      margin-bottom: 1rem;
+    }
+    label { display: block; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    input {
+      width: 100%;
+      background: rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      padding: 0.6rem;
+      border-radius: 8px;
+      outline: none;
+    }
+    input:focus { border-color: var(--primary); }
+
+    button {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+
+    .footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="logo">🐱</span>
+    <h1>FatCat Break</h1>
+  </div>
+
+  <div class="status-card">
+    <div class="status-label">Next Judgment</div>
+    <div class="status-value" id="timeLeft">Calculating...</div>
+  </div>
+
+  <div class="control-group">
+    <label for="interval">Work Interval (minutes)</label>
+    <input type="number" id="interval" min="1" max="120" value="25">
+  </div>
+
+  <button id="saveBtn">Update Timer</button>
+  <button id="testBtn" style="background: var(--card); margin-top: 0.5rem; border: 1px solid var(--primary); color: var(--primary);">Test Judgment</button>
+
+  <div class="footer">
+    He is watching. Don't disappoint him.
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

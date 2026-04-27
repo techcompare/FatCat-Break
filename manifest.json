@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "FatCat Break",
+  "version": "1.0.0",
+  "description": "A judgmental fat cat that forces you to take a break from your screen.",
+  "permissions": [
+    "alarms",
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["overlay.css"]
+    }
+  ]
+}
