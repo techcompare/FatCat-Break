@@ -21,17 +21,20 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 function setupAlarm(minutes) {
+  console.log(`Setting alarm for ${minutes} minutes...`);
   chrome.alarms.clear('fatCatBreak');
   chrome.alarms.create('fatCatBreak', { delayInMinutes: parseFloat(minutes) });
 }
 
 chrome.alarms.onAlarm.addListener((alarm) => {
+  console.log(`Alarm triggered: ${alarm.name}`);
   if (alarm.name === 'fatCatBreak') {
     startBreak();
   }
 });
 
 async function startBreak() {
+  console.log("Starting break takeover...");
   chrome.storage.local.set({ isBreakActive: true });
   
   // Notify all tabs to show the cat

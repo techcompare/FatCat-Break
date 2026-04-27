@@ -1,4 +1,5 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log("FatCat received action:", request.action);
   if (request.action === "SHOW_CAT") {
     showOverlay();
   } else if (request.action === "HIDE_CAT") {
