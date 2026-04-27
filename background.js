@@ -42,8 +42,9 @@ function endBreak() {
 }
 
 async function notifyAllTabs(action) {
-  const tabs = await chrome.tabs.query({ url: ["http://*/*", "https://*/*"] });
+  const tabs = await chrome.tabs.query({});
   for (const tab of tabs) {
+    if (!tab.url || tab.url.startsWith('chrome://')) continue;
     try {
       if (action === "SHOW_CAT") {
         // Stage 1: Force load the content script file

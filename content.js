@@ -9,9 +9,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function showOverlay() {
+  if (window.FAT_CAT_ACTIVE) return;
   if (document.getElementById('fat-cat-overlay-root')) return;
+
+  window.FAT_CAT_ACTIVE = true;
   if (!document.body) {
-    console.warn("[FatCat] Body not found, waiting...");
     setTimeout(showOverlay, 500);
     return;
   }
@@ -24,7 +26,7 @@ function showOverlay() {
   host.style.left = '0';
   document.body.appendChild(host);
 
-  const shadow = host.attachShadow({ mode: 'closed' });
+  const shadow = host.attachShadow({ mode: 'open' });
   
   // Inject CSS directly for maximum reliability
   const style = document.createElement('style');
