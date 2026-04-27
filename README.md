@@ -11,10 +11,10 @@ FatCat Break is an open-source Chrome extension that uses the power of "Chonky J
 
 ## 🚀 Features
 
-- 🛑 **Hostile Takeover:** A full-screen overlay that blocks all interaction during breaks.
-- 🐈 **Pure CSS Fat Cat:** No heavy images or external dependencies. Just raw, chunky, animated CSS shapes.
-- ⏳ **Customizable Intervals:** Set your own work/break ratio (if you dare).
-- 🌑 **Glassmorphism UI:** A sleek, modern design because the cat has standards.
+- 🎯 **Site-Specific Hijacking:** Only blocks you on distracting sites (YouTube, Reddit, Instagram, etc.).
+- 🧠 **Intelligent Tab Tracking:** Timer only counts when a distraction tab is active and visible.
+- 🐈 **The "Forced Break":** A giant, breathing, judgmental CSS cat takes over your screen once the limit is hit.
+- ⏳ **Countdown Enforcement:** You must rest until the cat's countdown finishes. No skipping.
 
 ## 📦 How to Install (Developer Mode)
 

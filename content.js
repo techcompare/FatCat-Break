@@ -49,8 +49,6 @@ function showOverlay() {
   `;
   shadow.appendChild(style);
 
-  const container = document.createElement('div');
-  container.id = 'fat-cat-overlay';
   container.innerHTML = `
     <div class="cat-container">
       <div class="cat-message">JUDGING YOUR PRODUCTIVITY...</div>
@@ -66,11 +64,23 @@ function showOverlay() {
         </div>
         <div class="cat-tail"></div>
       </div>
-      <div class="break-timer">Go away. Touch some grass for 5 minutes.</div>
+      <div class="break-timer">Break ends in: <span id="fatcat-countdown">5:00</span></div>
+      <div class="break-subtitle">He will not leave until you have rested.</div>
     </div>
   `;
   shadow.appendChild(container);
   document.body.style.overflow = 'hidden';
+
+  // Countdown logic
+  let timeLeft = 300; // 5 minutes
+  const timerDisplay = shadow.getElementById('fatcat-countdown');
+  const interval = setInterval(() => {
+    timeLeft--;
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    timerDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    if (timeLeft <= 0) clearInterval(interval);
+  }, 1000);
 }
 
 function hideOverlay() {
