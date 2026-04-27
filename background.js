@@ -42,10 +42,27 @@ function endBreak() {
 }
 
 async function notifyAllTabs(action) {
-  const tabs = await chrome.tabs.query({});
-  tabs.forEach(tab => {
-    chrome.tabs.sendMessage(tab.id, { action }).catch(() => {});
-  });
+  const tabs = await chrome.tabs.query({ url: ["http://*/*", "https://*/*"] });
+  for (const tab of tabs) {
+    try {
+      if (action === "SHOW_CAT") {
+        chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          func: () => {
+            if (typeof showOverlay === 'function') showOverlay();
+            else console.error("[FatCat] Content script not loaded in this tab.");
+          }
+        }).catch(() => {});
+      } else {
+        chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          func: () => {
+            if (typeof hideOverlay === 'function') hideOverlay();
+          }
+        }).catch(() => {});
+      }
+    } catch (e) {}
+  }
 }
 
 function resetSession() {
