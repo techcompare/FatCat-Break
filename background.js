@@ -46,11 +46,17 @@ async function notifyAllTabs(action) {
   for (const tab of tabs) {
     try {
       if (action === "SHOW_CAT") {
+        // Stage 1: Force load the content script file
+        await chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          files: ['content.js']
+        }).catch(() => {});
+
+        // Stage 2: Trigger the overlay
         chrome.scripting.executeScript({
           target: { tabId: tab.id },
           func: () => {
             if (typeof showOverlay === 'function') showOverlay();
-            else console.error("[FatCat] Content script not loaded in this tab.");
           }
         }).catch(() => {});
       } else {
